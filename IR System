@@ -1,0 +1,51 @@
+#include <IRremote.h>
+
+const int buttonPin = 2;     // the number of the pushbutton pin
+const int IRPin =  13;      // the number of the LED pin
+const int ledPin = 12; 
+const int photoPin = A0; 
+const int potPin = A1; 
+
+int potState =0;
+int sensorValue =0;
+void setup()
+{
+  pinMode(photoPin, OUTPUT); 
+  pinMode(IRPin, OUTPUT); 
+  pinMode(ledPin, OUTPUT); 
+  pinMode(potPin, INPUT);
+ Serial.begin(9600);
+}
+
+void loop()
+{
+  //debug 
+  //digitalWrite(ledPin, HIGH); 
+  sensorValue = analogRead(photoPin);
+  potState = analogRead(potPin); 
+  
+  
+  //Potentiometer state 
+  if(potState > 750) {
+  digitalWrite(IRPin, HIGH); 
+  }
+  else {
+  digitalWrite(IRPin, LOW); 
+  } 
+  
+  //Sensor readout 
+  if(sensorValue == HIGH){
+  digitalWrite(ledPin, HIGH);
+    Serial.print("Sensor Value: HIGH" ); 
+  }
+  else {
+  digitalWrite(ledPin,LOW);
+  Serial.print("Sensor Value: LOW" ); }
+  
+  Serial.print(" ");
+  Serial.print("Potentiometer Value: ");
+  Serial.println(potState);
+  
+  delay(5); // Slight delay to help with processing 
+ 
+}
